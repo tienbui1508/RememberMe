@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var data = PeopleModel()
+    @ObservedObject var data = PeopleModel()
     @State private var addingNewPerson = false
+    
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(data.people.sorted()) { person in
+                ForEach(data.people) { person in
                     NavigationLink {
                         DetailsView(person: person)
                     } label: {
@@ -22,7 +23,8 @@ struct ContentView: View {
                     }
                     
                 }
-                .onDelete(perform: delete)
+                .onDelete(perform: data.deletePeople)
+                
             }
             .listStyle(.plain)
             .navigationTitle("Remember Me")
@@ -39,10 +41,6 @@ struct ContentView: View {
             }
         }
         
-    }
-    
-    func delete(at offsets: IndexSet) {
-        data.people.remove(atOffsets: offsets)
     }
 }
 

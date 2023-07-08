@@ -51,12 +51,8 @@ struct AddPersonView: View {
                 Spacer()
                 
                 Button {
-                    let id = UUID()
-                    let newPerson = Person(id: id, firstName: firstName, lastName: lastName, description: description)
-                    let photoURL = newPerson.photoURL
-                    savePhoto(photoURL: photoURL)
-                    data.addNewPerson(newPerson)
-                    data.save()
+                    let newPerson = data.createNewPerson(firstName, lastName, description)
+                    savePhoto(photoURL: newPerson.photoURL)
                     dissmiss()
                 } label: {
                     Text("Save")
@@ -71,7 +67,6 @@ struct AddPersonView: View {
             .padding()
         }
     }
-    
     
     func loadImage() {
         guard let inputImage = inputImage else { return }
