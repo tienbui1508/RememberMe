@@ -34,10 +34,10 @@ class PeopleModel: ObservableObject {
     
     
     func createNewPerson(_ firstName: String, _ lastName: String, _ description: String) -> Person {
+        objectWillChange.send()
         let id = UUID()
         let newPerson = Person(id: id, firstName: firstName, lastName: lastName, description: description)
         people.append(newPerson)
-        people = people.sorted()
         save()
         return newPerson
     }
